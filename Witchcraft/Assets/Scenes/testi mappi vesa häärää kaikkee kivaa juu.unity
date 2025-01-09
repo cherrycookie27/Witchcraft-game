@@ -320,12 +320,12 @@ Terrain:
   serializedVersion: 6
   m_TerrainData: {fileID: 15600000, guid: 810020d516e56134a8fa99040a6733b9, type: 2}
   m_TreeDistance: 5000
-  m_TreeBillboardDistance: 50
-  m_TreeCrossFadeLength: 5
-  m_TreeMaximumFullLODCount: 50
-  m_DetailObjectDistance: 80
+  m_TreeBillboardDistance: 2000
+  m_TreeCrossFadeLength: 192.5
+  m_TreeMaximumFullLODCount: 0
+  m_DetailObjectDistance: 1000
   m_DetailObjectDensity: 1
-  m_HeightmapPixelError: 5
+  m_HeightmapPixelError: 1
   m_SplatMapDistance: 1000
   m_HeightmapMinimumLODSimplification: 0
   m_HeightmapMaximumLOD: 0
@@ -335,8 +335,8 @@ Terrain:
   m_DrawTreesAndFoliage: 1
   m_StaticShadowCaster: 0
   m_IgnoreQualitySettings: 0
-  m_ReflectionProbeUsage: 1
-  m_MaterialTemplate: {fileID: 10652, guid: 0000000000000000f000000000000000, type: 0}
+  m_ReflectionProbeUsage: 0
+  m_MaterialTemplate: {fileID: 2100000, guid: 94eb5898a80f41a42be5a0a4cdfdb163, type: 2}
   m_BakeLightProbesForTrees: 1
   m_PreserveTreePrototypeLayers: 0
   m_DeringLightProbesForTrees: 1
@@ -587,13 +587,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1354173559}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalRotation: {x: -0.27077988, y: -0.31679213, z: 0.7667417, w: 0.4882911}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 12.789, y: -47.991, z: 109.307}
 --- !u!1 &1388544465
 GameObject:
   m_ObjectHideFlags: 0
@@ -696,7 +696,7 @@ Transform:
   m_GameObject: {fileID: 1388544465}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.01, z: 0}
+  m_LocalPosition: {x: 0, y: 0.23, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -954,13 +954,33 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2691327176905401633, guid: 190d3b39f714a41459aaaa5e6d6adafb, type: 3}
+      propertyPath: m_ClearFlags
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2691327176905401633, guid: 190d3b39f714a41459aaaa5e6d6adafb, type: 3}
+      propertyPath: m_BackGroundColor.a
+      value: 0.94509804
+      objectReference: {fileID: 0}
+    - target: {fileID: 2691327176905401633, guid: 190d3b39f714a41459aaaa5e6d6adafb, type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0.3207547
+      objectReference: {fileID: 0}
+    - target: {fileID: 2691327176905401633, guid: 190d3b39f714a41459aaaa5e6d6adafb, type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0.16794232
+      objectReference: {fileID: 0}
+    - target: {fileID: 2691327176905401633, guid: 190d3b39f714a41459aaaa5e6d6adafb, type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0.18921995
+      objectReference: {fileID: 0}
     - target: {fileID: 3474808478208689206, guid: 190d3b39f714a41459aaaa5e6d6adafb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3474808478208689206, guid: 190d3b39f714a41459aaaa5e6d6adafb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.001
+      value: 0.23
       objectReference: {fileID: 0}
     - target: {fileID: 3474808478208689206, guid: 190d3b39f714a41459aaaa5e6d6adafb, type: 3}
       propertyPath: m_LocalPosition.z
@@ -993,6 +1013,14 @@ PrefabInstance:
     - target: {fileID: 3474808478208689206, guid: 190d3b39f714a41459aaaa5e6d6adafb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3513153196893904034, guid: 190d3b39f714a41459aaaa5e6d6adafb, type: 3}
+      propertyPath: MoveSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3513153196893904034, guid: 190d3b39f714a41459aaaa5e6d6adafb, type: 3}
+      propertyPath: SprintSpeed
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 3823466431170034819, guid: 190d3b39f714a41459aaaa5e6d6adafb, type: 3}
       propertyPath: m_Name
