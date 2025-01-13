@@ -10,22 +10,13 @@ public class itemPickUp : MonoBehaviour
     public bool CanInteract;
 
 
-
-    // Start is called before the first frame update
     void Start()
     {
 
-        InteractionE.active = false;
+        InteractionE.SetActive(false);
 
         Instance = this;
-
-
-
     }
-
-
-    
-
 
     private void OnTriggerEnter(Collider other)
     {
@@ -36,12 +27,8 @@ public class itemPickUp : MonoBehaviour
 
             CanInteract = true;
 
-            InteractionE.active = true;
-
+            InteractionE.SetActive(true);
         }
-
-
-
     }
 
     private void OnTriggerExit(Collider other)
@@ -53,14 +40,12 @@ public class itemPickUp : MonoBehaviour
 
             CanInteract = false;
 
-            InteractionE.active = false;
-
+            InteractionE.SetActive(false);
         }
 
     }
 
 
-    // Update is called once per frame
     void Update()
     {
         
@@ -71,10 +56,6 @@ public class itemPickUp : MonoBehaviour
             Destroy(gameObject);
 
         }
-
-
-
-
 
     }
 }
