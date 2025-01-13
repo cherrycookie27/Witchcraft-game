@@ -70,7 +70,7 @@ public class pauseMenu : MonoBehaviour
     void Update()
     {
         
-        if (Input.GetKeyDown(KeyCode.U))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
 
             if (!isPaused)
