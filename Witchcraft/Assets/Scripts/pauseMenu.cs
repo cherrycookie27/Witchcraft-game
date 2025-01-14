@@ -48,7 +48,6 @@ public class pauseMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
         pausemenu.SetActive(false);
 
         isPaused = false;
@@ -75,8 +74,14 @@ public class pauseMenu : MonoBehaviour
 
             if (!isPaused)
             {
-
-                pauseGame();
+                if(sai.GetComponent<FirstPersonController>().minigameActive)
+                {
+                    sai.GetComponent<FirstPersonController>().ToggleMinigame();
+                }
+                else
+                {
+                    pauseGame();
+                }
 
                
 

@@ -16,10 +16,10 @@ public class RuneDrawing : MonoBehaviour
 
     public LineRenderer linePrefab;
     int pointCount;
-    private int currentCheckpointIndex = 0;
     public List<LineRenderer> activeLines = new List<LineRenderer>();
     Vector3 mousePos;
     bool drawing;
+    public Transform parentObj;
 
     private void Start()
     {
@@ -31,6 +31,7 @@ public class RuneDrawing : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             LineRenderer g = Instantiate(linePrefab);
+            g.transform.parent = parentObj;
             activeLines.Add(g);
             pointCount = 0;
             drawnLenghts.Add(0);
@@ -98,6 +99,7 @@ public class RuneDrawing : MonoBehaviour
                             }
 
                             Debug.Log("Winner!!!!");
+                            //disable the minigame and make the rune appear
                             drawing = false;
                             return;
                         }
@@ -111,23 +113,6 @@ public class RuneDrawing : MonoBehaviour
         }
     }
 
-    private void HandleCheckpointClick(GameObject clickedCheckpoint)
-    {
-        if (clickedCheckpoint == checkPoints[currentCheckpointIndex])
-        {
-            if (currentCheckpointIndex > 0)
-            {
-                DrawLine(checkPoints[currentCheckpointIndex - 1].transform.position, clickedCheckpoint.transform.position);
-            }
-
-            currentCheckpointIndex++;
-        }
-        else
-        {
-            Debug.Log("Incorrect order! Resetting lines.");
-            ResetLines();
-        }
-    }
 
     private void DrawLine(Vector3 start, Vector3 end)
     {
@@ -137,7 +122,7 @@ public class RuneDrawing : MonoBehaviour
         activeLines.Add(line);
     }
 
-    private void ResetLines()
+    public void ResetLines()
     {
         drawing = false;
         foreach (LineRenderer line in activeLines)
@@ -146,7 +131,6 @@ public class RuneDrawing : MonoBehaviour
         }
         activeLines.Clear();
 
-        currentCheckpointIndex = 0;
         drawn = new List<GameObject>();
         drawnLenghts = new List<int>();
         pointCount = 0;

@@ -15,13 +15,17 @@ namespace StarterAssets
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
-
+		public bool canMove;
 		[Header("Mouse Cursor Settings")]
 		public bool cursorLocked = true;
 		public bool cursorInputForLook = true;
 
+        private void Start()
+        {
+			canMove = true;
+        }
 #if ENABLE_INPUT_SYSTEM
-		public void OnMove(InputValue value)
+        public void OnMove(InputValue value)
 		{
 			MoveInput(value.Get<Vector2>());
 		}
@@ -48,7 +52,14 @@ namespace StarterAssets
 
 		public void MoveInput(Vector2 newMoveDirection)
 		{
-			move = newMoveDirection;
+			if(canMove)
+			{
+				move = newMoveDirection;
+			}
+			else
+			{
+				newMoveDirection = new Vector2(0, 0);
+			}
 		} 
 
 		public void LookInput(Vector2 newLookDirection)
@@ -70,7 +81,10 @@ namespace StarterAssets
 		{
 			//SetCursorState(cursorLocked);
 		}
-
+		public void ToggleMovement(bool b)
+		{
+			canMove = b;
+		}
 		public void SetCursorState(bool newState)
 		{
 			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
