@@ -75,7 +75,7 @@ namespace StarterAssets
 		private const float _threshold = 0.01f;
 
 		public GameObject minigame;
-		bool minigameActive;
+		public bool minigameActive;
 		private bool IsCurrentDeviceMouse
 		{
 			get
@@ -96,6 +96,8 @@ namespace StarterAssets
 				_mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
 			}
 			minigame.SetActive(false);
+
+			
 		}
 
 		private void Start()
@@ -113,6 +115,18 @@ namespace StarterAssets
 			_fallTimeoutDelta = FallTimeout;
 		}
 
+		public void ToggleMinigame()
+		{
+            minigameActive = !minigameActive;
+            minigame.SetActive(minigameActive);
+            GetComponent<StarterAssetsInputs>().SetCursorState(!minigameActive);
+            GetComponent<StarterAssetsInputs>().cursorInputForLook = !minigameActive;
+            GetComponent<StarterAssetsInputs>().LookInput(new Vector2());
+            GetComponent<StarterAssetsInputs>().MoveInput(new Vector2());
+            GetComponent<StarterAssetsInputs>().ToggleMovement(!minigameActive);
+            minigame.GetComponent<RuneDrawing>().ResetLines();
+            Cursor.visible = minigameActive;
+        }
 		private void Update()
 		{
 			JumpAndGravity();
@@ -120,12 +134,7 @@ namespace StarterAssets
 			Move();
 			if (Input.GetKeyDown(KeyCode.Q))
 			{
-				//wee
-				minigameActive = !minigameActive;
-				minigame.SetActive(minigameActive);
-				GetComponent<StarterAssetsInputs>().SetCursorState(!minigameActive);
-				GetComponent<StarterAssetsInputs>().cursorInputForLook = !minigameActive;
-				Cursor.visible = minigameActive;
+				ToggleMinigame();
 			}
 		}
 
@@ -165,6 +174,8 @@ namespace StarterAssets
 
 		private void Move()
 		{
+			if (minigameActive) return;
+
 			// set target speed based on move speed, sprint speed and if sprint is pressed
 			float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
 
