@@ -2,6 +2,7 @@
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 #endif
+using UnityEngine.UI;
 
 namespace StarterAssets
 {
@@ -64,6 +65,17 @@ namespace StarterAssets
 		private float _jumpTimeoutDelta;
 		private float _fallTimeoutDelta;
 
+
+
+		private float stamina;
+
+		public float maxStamina;
+
+		public Image staminabar;
+
+
+
+
 	
 #if ENABLE_INPUT_SYSTEM
 		private PlayerInput _playerInput;
@@ -104,6 +116,10 @@ namespace StarterAssets
 #else
 			Debug.LogError( "Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
 #endif
+
+			stamina = maxStamina;
+
+
 
 			// reset our timeouts on start
 			_jumpTimeoutDelta = JumpTimeout;
@@ -154,7 +170,35 @@ namespace StarterAssets
 		private void Move()
 		{
 			// set target speed based on move speed, sprint speed and if sprint is pressed
-			float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
+			float targetSpeed = _input.sprint && stamina > 0 ? SprintSpeed : MoveSpeed;
+
+			if (_input.sprint)
+            {
+				stamina -= Time.deltaTime;
+				if (stamina <= 0)
+                {
+					stamina = 0;
+
+                }
+
+
+            }
+            else
+            {
+				stamina += Time.deltaTime;
+
+				if (stamina > maxStamina)
+                {
+					stamina = maxStamina;
+                }
+				
+            }
+
+			staminabar.fillAmount = 1f / maxStamina * stamina;
+
+
+
+
 
 			// a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
