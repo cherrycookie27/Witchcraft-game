@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 #if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
 #endif
@@ -69,12 +70,13 @@ namespace StarterAssets
 
 		private float stamina;
 
+		public float StaminaRegenRate;
 		public float maxStamina;
 
 		public Image staminabar;
 
-
-
+		bool canRun = true;
+		bool isSprinting = false;
 
 	
 #if ENABLE_INPUT_SYSTEM
@@ -188,6 +190,34 @@ namespace StarterAssets
 			}
 		}
 
+		IEnumerator Exhaustion()
+		{
+			canRun = false;
+
+			yield return new WaitForSeconds(2);
+
+			canRun = true;
+		}
+
+		IEnumerator SprintCooldown()
+		{
+			yield return new WaitForSeconds(0.5f);
+			while (!isSprinting && stamina < maxStamina)
+			{
+				stamina += Time.deltaTime * StaminaRegenRate;
+				if (stamina > maxStamina)
+				{
+					stamina = maxStamina;
+				}
+				staminabar.fillAmount = stamina / maxStamina;
+				yield return null;
+			}
+		}
+
+		private bool IsCoroutineRunning(string coroutineName)
+		{
+			return StartCoroutine(coroutineName) != null;
+		}
 		private void Move()
 		{
 			if (minigameActive) return;
@@ -195,29 +225,29 @@ namespace StarterAssets
 			// set target speed based on move speed, sprint speed and if sprint is pressed
 			float targetSpeed = _input.sprint && stamina > 0 ? SprintSpeed : MoveSpeed;
 
-			if (_input.sprint)
+			if (_input.sprint && stamina > 0)
             {
 				stamina -= Time.deltaTime;
+				isSprinting = true;
 				if (stamina <= 0)
                 {
 					stamina = 0;
+					StartCoroutine(Exhaustion());
 
                 }
-
-
             }
             else
             {
-				stamina += Time.deltaTime;
+				isSprinting = false;
 
-				if (stamina > maxStamina)
-                {
-					stamina = maxStamina;
-                }
+				if (canRun && !IsCoroutineRunning("SprintCooldown"))
+				{
+					StartCoroutine(SprintCooldown());
+				}
 				
             }
 
-			staminabar.fillAmount = 1f / maxStamina * stamina;
+            staminabar.fillAmount = 1f / maxStamina * stamina;
 
 
 

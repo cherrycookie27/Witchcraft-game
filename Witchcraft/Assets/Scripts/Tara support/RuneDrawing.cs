@@ -14,6 +14,7 @@ public class RuneDrawing : MonoBehaviour
     GameObject minigame;
     GameObject previousHit;
 
+    [SerializeField] AudioSource runeDrawn;
     public LineRenderer linePrefab;
     int pointCount;
     public List<LineRenderer> activeLines = new List<LineRenderer>();
@@ -100,6 +101,9 @@ public class RuneDrawing : MonoBehaviour
 
                             Debug.Log("Winner!!!!");
                             //disable the minigame and make the rune appear
+
+                            
+                            runeDrawn.Play();
                             drawing = false;
                             return;
                         }

@@ -8,7 +8,7 @@ public class itemPickUp : MonoBehaviour
     public static itemPickUp Instance;
     public GameObject InteractionE;
     public bool CanInteract;
-
+    [SerializeField] AudioSource pickUp;
 
     void Start()
     {
@@ -51,7 +51,7 @@ public class itemPickUp : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.E) && CanInteract)
         {
-
+            pickUp.Play();
             inventorymanager.Instance.increasecollectibles(1);
             Destroy(gameObject);
 

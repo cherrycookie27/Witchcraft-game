@@ -15,5 +15,6 @@ public class enemy : MonoBehaviour
         transform.position = Vector3.MoveTowards(this.transform.position, player.transform.position, speed * Time.deltaTime);
 
 
+
     }
 }
