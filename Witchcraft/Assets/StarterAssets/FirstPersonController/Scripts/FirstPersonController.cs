@@ -74,6 +74,8 @@ namespace StarterAssets
 
 		private const float _threshold = 0.01f;
 
+		public GameObject minigame;
+		bool minigameActive;
 		private bool IsCurrentDeviceMouse
 		{
 			get
@@ -93,6 +95,7 @@ namespace StarterAssets
 			{
 				_mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
 			}
+			minigame.SetActive(false);
 		}
 
 		private void Start()
@@ -115,6 +118,15 @@ namespace StarterAssets
 			JumpAndGravity();
 			GroundedCheck();
 			Move();
+			if (Input.GetKeyDown(KeyCode.Q))
+			{
+				//wee
+				minigameActive = !minigameActive;
+				minigame.SetActive(minigameActive);
+				GetComponent<StarterAssetsInputs>().SetCursorState(!minigameActive);
+				GetComponent<StarterAssetsInputs>().cursorInputForLook = !minigameActive;
+				Cursor.visible = minigameActive;
+			}
 		}
 
 		private void LateUpdate()

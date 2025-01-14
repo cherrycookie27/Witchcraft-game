@@ -11,6 +11,7 @@ public class RuneDrawing : MonoBehaviour
     public List<GameObject> drawn;
     public List<int> drawnLenghts;
 
+    GameObject minigame;
     GameObject previousHit;
 
     public LineRenderer linePrefab;
@@ -43,7 +44,8 @@ public class RuneDrawing : MonoBehaviour
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             mousePos = ray.origin;
-            if (Physics.Raycast(ray, out RaycastHit hit))
+            LayerMask lm = LayerMask.GetMask("Node");
+            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, lm))
             {
                 GameObject hitObject = hit.collider.gameObject;
                 if (hitObject != null && hitObject != previousHit)
