@@ -6,6 +6,7 @@ TagManager:
   tags:
   - CinemachineTarget
   - item
+  - Node
   layers:
   - Default
   - TransparentFX
@@ -13,7 +14,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Node
   - 
   - 
   - 
