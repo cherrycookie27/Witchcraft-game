@@ -88,6 +88,10 @@ namespace StarterAssets
 
 		private const float _threshold = 0.01f;
 
+		Rigidbody rb;
+		[SerializeField] AudioSource exhausted;
+		[SerializeField] AudioSource walking;
+
 		public GameObject minigame;
 		public bool minigameActive;
 		private bool IsCurrentDeviceMouse
@@ -111,7 +115,7 @@ namespace StarterAssets
 			}
 			minigame.SetActive(false);
 
-			
+			rb = GetComponent<Rigidbody>();
 		}
 
 		private void Start()
@@ -189,8 +193,8 @@ namespace StarterAssets
 				transform.Rotate(Vector3.up * _rotationVelocity);
 			}
 		}
-
-		IEnumerator Exhaustion()
+        #region StaminaStuff
+        IEnumerator Exhaustion()
 		{
 			canRun = false;
 
@@ -218,14 +222,22 @@ namespace StarterAssets
 		{
 			return StartCoroutine(coroutineName) != null;
 		}
-		private void Move()
+        #endregion
+        private void Move()
 		{
 			if (minigameActive) return;
 
 			// set target speed based on move speed, sprint speed and if sprint is pressed
 			float targetSpeed = _input.sprint && stamina > 0 ? SprintSpeed : MoveSpeed;
-
-			if (_input.sprint && stamina > 0)
+			if (rb.velocity.magnitude > 0)
+			{
+				// yes sound and hand movement!!
+			}
+			else if (rb.velocity.magnitude < 0)
+			{
+				// dont sound
+			}
+            if (_input.sprint && stamina > 0)
             {
 				stamina -= Time.deltaTime;
 				isSprinting = true;
@@ -233,7 +245,7 @@ namespace StarterAssets
                 {
 					stamina = 0;
 					StartCoroutine(Exhaustion());
-
+					exhausted.Play();
                 }
             }
             else
