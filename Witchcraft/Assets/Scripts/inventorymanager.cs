@@ -37,7 +37,7 @@ public class inventorymanager : MonoBehaviour
         if (currentcollectibles >= maxcollectibles)
         {
             taskText.text = "Cast the spell in the spell circle!";
-            // can spell!!!!
+            collectibletext.text = "";
         }
     }
 }
