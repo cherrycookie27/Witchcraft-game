@@ -88,7 +88,6 @@ namespace StarterAssets
 
 		private const float _threshold = 0.01f;
 
-		Rigidbody rb;
 		[SerializeField] AudioSource exhausted;
 		[SerializeField] AudioSource walking;
 
@@ -115,7 +114,6 @@ namespace StarterAssets
 			}
 			minigame.SetActive(false);
 
-			rb = GetComponent<Rigidbody>();
 		}
 
 		private void Start()
@@ -139,8 +137,10 @@ namespace StarterAssets
 
 		public void ToggleMinigame()
 		{
+			//test
             minigameActive = !minigameActive;
             minigame.SetActive(minigameActive);
+			return;
             GetComponent<StarterAssetsInputs>().SetCursorState(!minigameActive);
             GetComponent<StarterAssetsInputs>().cursorInputForLook = !minigameActive;
             GetComponent<StarterAssetsInputs>().LookInput(new Vector2());
@@ -225,18 +225,9 @@ namespace StarterAssets
         #endregion
         private void Move()
 		{
-			if (minigameActive) return;
 
 			// set target speed based on move speed, sprint speed and if sprint is pressed
 			float targetSpeed = _input.sprint && stamina > 0 ? SprintSpeed : MoveSpeed;
-			if (rb.velocity.magnitude > 0)
-			{
-				// yes sound and hand movement!!
-			}
-			else if (rb.velocity.magnitude < 0)
-			{
-				// dont sound
-			}
             if (_input.sprint && stamina > 0)
             {
 				stamina -= Time.deltaTime;

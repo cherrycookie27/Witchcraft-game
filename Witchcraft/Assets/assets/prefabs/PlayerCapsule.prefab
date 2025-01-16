@@ -26,11 +26,11 @@ Transform:
   m_GameObject: {fileID: 346625413208092563}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.84, y: 0.925, z: 0.451}
+  m_LocalPosition: {x: -0.84, y: -0.45, z: 0.451}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3474808478208689206}
+  m_Father: {fileID: 7019123014712272116}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!108 &6488748726153449203
 Light:
@@ -122,6 +122,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 4483298911017200491}
   - {fileID: 2691327176905401638}
   m_Father: {fileID: 3474808478208689206}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -288,7 +289,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2594338860227317013}
-  - {fileID: 4483298911017200491}
   - {fileID: 7019123014712272116}
   - {fileID: 9117833960352320765}
   m_Father: {fileID: 0}
@@ -348,6 +348,13 @@ MonoBehaviour:
   CinemachineCameraTarget: {fileID: 1708085686358137060}
   TopClamp: 89
   BottomClamp: -89
+  StaminaRegenRate: 0
+  maxStamina: 0
+  staminabar: {fileID: 0}
+  exhausted: {fileID: 0}
+  walking: {fileID: 0}
+  minigame: {fileID: 0}
+  minigameActive: 0
 --- !u!114 &6594277363971484430
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -382,6 +389,7 @@ MonoBehaviour:
   jump: 0
   sprint: 0
   analogMovement: 0
+  canMove: 0
   cursorLocked: 1
   cursorInputForLook: 1
 --- !u!114 &7037056188018921841
