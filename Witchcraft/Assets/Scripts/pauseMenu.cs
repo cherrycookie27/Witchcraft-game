@@ -5,6 +5,7 @@ using StarterAssets;
 
 public class pauseMenu : MonoBehaviour
 {
+    public static pauseMenu instance;
 
     public GameObject pausemenu;
     public bool isPaused;
@@ -48,6 +49,8 @@ public class pauseMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        instance = this;
+
         pausemenu.SetActive(false);
 
         isPaused = false;

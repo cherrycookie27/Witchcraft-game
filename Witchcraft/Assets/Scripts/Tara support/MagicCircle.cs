@@ -2,25 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class MagicCircle : MonoBehaviour
 {
     public static MagicCircle instance;
 
+    public GameObject MONSERT;
+    public GameObject BONES;
     public TMP_Text circleText;
+
+    [SerializeField] AudioSource monster;
 
     public bool canRitual = false;
     private void Start()
     {
         instance = this;
         circleText.text = "";
+        BONES.SetActive(false);
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E) && canRitual)
         {
-            //ritual!!!
+            BONES.SetActive(true);
+            monster.Play();
+
+            MONSERT.SetActive(false);
+            StartCoroutine(Ending());
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -33,7 +43,7 @@ public class MagicCircle : MonoBehaviour
             }
             else if (inventorymanager.Instance.currentcollectibles >= 5)
             {
-                circleText.text = "Do the expel ritual";
+                circleText.text = "Press E to do the expel ritual";
                 canRitual = true;
             }
             else
@@ -49,5 +59,18 @@ public class MagicCircle : MonoBehaviour
         {
             circleText.text = "";
         }
+    }
+
+    IEnumerator Ending()
+    {
+        circleText.text = "I did it...";
+
+        yield return new WaitForSeconds(3);
+
+        circleText.text = "It's finally over...";
+
+        yield return new WaitForSeconds (5);
+
+        SceneManager.LoadScene("Win");
     }
 }

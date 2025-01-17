@@ -66,18 +66,26 @@ namespace StarterAssets
 		private float _jumpTimeoutDelta;
 		private float _fallTimeoutDelta;
 
+        public RectTransform hand;
+        public float speed = 1f;
 
-
-		private float stamina;
+        private float stamina;
 
 		public float StaminaRegenRate;
 		public float maxStamina;
 
+		public int pointA;
+		public int pointB;
+		public int pointC;
+		public int pointD;
+
 		public Image staminabar;
 
+		public bool isMoving = false;
 		bool canRun = true;
-		bool isSprinting = false;
+		public bool isSprinting = false;
 
+		Rigidbody rb;
 	
 #if ENABLE_INPUT_SYSTEM
 		private PlayerInput _playerInput;
@@ -86,10 +94,13 @@ namespace StarterAssets
 		private StarterAssetsInputs _input;
 		private GameObject _mainCamera;
 
+		public Transform monsterFace;
+		public Transform minGamePos;
 		private const float _threshold = 0.01f;
 
 		[SerializeField] AudioSource exhausted;
 		[SerializeField] AudioSource walking;
+		[SerializeField] AudioSource running;
 
 		public GameObject minigame;
 		public bool minigameActive;
@@ -113,7 +124,7 @@ namespace StarterAssets
 				_mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
 			}
 			minigame.SetActive(false);
-
+			rb = GetComponent<Rigidbody>();
 		}
 
 		private void Start()
@@ -140,7 +151,7 @@ namespace StarterAssets
 			//test
             minigameActive = !minigameActive;
             minigame.SetActive(minigameActive);
-			return;
+		
             GetComponent<StarterAssetsInputs>().SetCursorState(!minigameActive);
             GetComponent<StarterAssetsInputs>().cursorInputForLook = !minigameActive;
             GetComponent<StarterAssetsInputs>().LookInput(new Vector2());
@@ -154,11 +165,25 @@ namespace StarterAssets
 			JumpAndGravity();
 			GroundedCheck();
 			Move();
+
 			if (Input.GetKeyDown(KeyCode.Q))
 			{
+
+				_mainCamera.transform.LookAt(minGamePos);
+
 				ToggleMinigame();
 			}
-		}
+
+            isMoving = rb.velocity.magnitude > 0.1f;
+
+
+            MovingSTuff();
+
+			if (enemy.instance.jumpscareOMG)
+			{
+				_mainCamera.transform.LookAt(monsterFace);
+			}
+        }
 
 		private void LateUpdate()
 		{
@@ -171,8 +196,33 @@ namespace StarterAssets
 			Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - GroundedOffset, transform.position.z);
 			Grounded = Physics.CheckSphere(spherePosition, GroundedRadius, GroundLayers, QueryTriggerInteraction.Ignore);
 		}
+        #region Movement sounds and hand 
+        private void MovingSTuff()
+        {
+			if(isMoving && !isSprinting)
+			{
+				if (running.isPlaying) running.Stop();
+				if (!walking.isPlaying) walking.Play();
 
-		private void CameraRotation()
+				float y = Mathf.PingPong(Time.time * speed, 1) * pointA - pointB;
+                hand.anchoredPosition = new Vector2(-376, y);
+            }
+			else if(isMoving && isSprinting)
+			{
+				if(walking.isPlaying) walking.Stop();
+				if(!running.isPlaying) running.Play();
+
+                float y = Mathf.PingPong(Time.time * speed, 1) * pointC - pointD;
+                hand.anchoredPosition = new Vector2(-376, y);
+            }
+			if(!isMoving || pauseMenu.instance.isPaused)
+			{
+                if (walking.isPlaying) walking.Stop();
+                if (running.isPlaying) running.Stop();
+            }
+        }
+        #endregion
+        private void CameraRotation()
 		{
 			// if there is an input
 			if (_input.look.sqrMagnitude >= _threshold)
@@ -234,6 +284,7 @@ namespace StarterAssets
 				isSprinting = true;
 				if (stamina <= 0)
                 {
+					isSprinting = false;
 					stamina = 0;
 					StartCoroutine(Exhaustion());
 					exhausted.Play();
@@ -242,7 +293,6 @@ namespace StarterAssets
             else
             {
 				isSprinting = false;
-
 				if (canRun && !IsCoroutineRunning("SprintCooldown"))
 				{
 					StartCoroutine(SprintCooldown());
