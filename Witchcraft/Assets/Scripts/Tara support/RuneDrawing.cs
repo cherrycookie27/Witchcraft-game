@@ -1,3 +1,4 @@
+using StarterAssets;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -14,7 +15,11 @@ public class RuneDrawing : MonoBehaviour
     GameObject minigame;
     GameObject previousHit;
 
+    public GameObject spawnLocation;
+
+    [SerializeField] GameObject rune;
     [SerializeField] AudioSource runeDrawn;
+
     public LineRenderer linePrefab;
     int pointCount;
     public List<LineRenderer> activeLines = new List<LineRenderer>();
@@ -100,11 +105,10 @@ public class RuneDrawing : MonoBehaviour
                             }
 
                             Debug.Log("Winner!!!!");
-                            //disable the minigame and make the rune appear
-
-                            
+                            FirstPersonController.instance.ToggleMinigame();
                             runeDrawn.Play();
                             drawing = false;
+                            Instantiate(rune); 
                             return;
                         }
                        

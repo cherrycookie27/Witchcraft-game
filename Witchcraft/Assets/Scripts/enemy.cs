@@ -6,7 +6,10 @@ using UnityEngine.SceneManagement;
 public class enemy : MonoBehaviour
 {
     public static enemy instance;
+
     public GameObject player;
+    [SerializeField] AudioSource raaah;
+    bool trapped;
     public float speed;
     public bool jumpscareOMG;
 
@@ -20,7 +23,15 @@ public class enemy : MonoBehaviour
         Vector3 sneakyPos = player.transform.position;
         sneakyPos.y = transform.position.y;
 
-       transform.position = Vector3.MoveTowards(this.transform.position, player.transform.position, speed * Time.deltaTime);
+        if (trapped == false)
+        {
+            transform.position = Vector3.MoveTowards(this.transform.position, player.transform.position, speed * Time.deltaTime);
+        }
+        else if (trapped)
+        {
+            raaah.Play();
+            StartCoroutine(OnTrap());
+        }
     }
  
     private void OnTriggerEnter(UnityEngine.Collider other)
@@ -29,6 +40,17 @@ public class enemy : MonoBehaviour
         {
             jumpscareOMG = true;
         }
+        if (other.gameObject.CompareTag("Trap"))
+        {
+            trapped = true;
+        }
+    }
+
+    IEnumerator OnTrap()
+    {
+        yield return new WaitForSeconds(2);
+
+        trapped = false;
     }
 
     void Losing()

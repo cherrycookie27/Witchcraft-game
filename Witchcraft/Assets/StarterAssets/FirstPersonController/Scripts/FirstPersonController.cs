@@ -53,6 +53,7 @@ namespace StarterAssets
 		[Tooltip("How far in degrees can you move the camera down")]
 		public float BottomClamp = -90.0f;
 
+		public static FirstPersonController instance;
 		// cinemachine
 		private float _cinemachineTargetPitch;
 
@@ -129,6 +130,7 @@ namespace StarterAssets
 
 		private void Start()
 		{
+			instance = this;
 			_controller = GetComponent<CharacterController>();
 			_input = GetComponent<StarterAssetsInputs>();
 #if ENABLE_INPUT_SYSTEM
@@ -148,7 +150,6 @@ namespace StarterAssets
 
 		public void ToggleMinigame()
 		{
-			//test
             minigameActive = !minigameActive;
             minigame.SetActive(minigameActive);
 		
@@ -169,9 +170,7 @@ namespace StarterAssets
 			if (Input.GetKeyDown(KeyCode.Q))
 			{
 
-				_mainCamera.transform.LookAt(minGamePos);
-
-				ToggleMinigame();
+                ToggleMinigame();
 			}
 
             isMoving = rb.velocity.magnitude > 0.1f;
@@ -181,7 +180,7 @@ namespace StarterAssets
 
 			if (enemy.instance.jumpscareOMG)
 			{
-				_mainCamera.transform.LookAt(monsterFace);
+				//freeze camera somewhere
 			}
         }
 

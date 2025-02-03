@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using StarterAssets;
 
 public class MagicCircle : MonoBehaviour
 {
@@ -69,7 +70,7 @@ public class MagicCircle : MonoBehaviour
 
         circleText.text = "It's finally over...";
 
-        yield return new WaitForSeconds (5);
+        yield return new WaitForSeconds (4);
 
         SceneManager.LoadScene("Win");
     }
