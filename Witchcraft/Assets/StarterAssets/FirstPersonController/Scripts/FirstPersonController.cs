@@ -180,6 +180,8 @@ namespace StarterAssets
 
 			if (enemy.instance.jumpscareOMG)
 			{
+				enemy.instance.jumpScarePos.gameObject.SetActive(true);
+				Camera.main.gameObject.SetActive(false);
 				//freeze camera somewhere
 			}
         }

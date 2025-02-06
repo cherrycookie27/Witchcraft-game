@@ -8,6 +8,7 @@ TagManager:
   - item
   - Node
   - Trap
+  - Enemy
   layers:
   - Default
   - TransparentFX

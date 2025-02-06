@@ -72,6 +72,9 @@ public class MagicCircle : MonoBehaviour
 
         yield return new WaitForSeconds (4);
 
+
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         SceneManager.LoadScene("Win");
     }
 }

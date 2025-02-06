@@ -14,9 +14,7 @@ public class RuneDrawing : MonoBehaviour
 
     GameObject minigame;
     GameObject previousHit;
-
-    public GameObject spawnLocation;
-
+    [SerializeField] Transform player;
     [SerializeField] GameObject rune;
     [SerializeField] AudioSource runeDrawn;
 
@@ -108,7 +106,9 @@ public class RuneDrawing : MonoBehaviour
                             FirstPersonController.instance.ToggleMinigame();
                             runeDrawn.Play();
                             drawing = false;
-                            Instantiate(rune); 
+                            Vector3 spawnPos = player.position;
+                            spawnPos.y = 1f;
+                            Instantiate(rune, spawnPos, Quaternion.Euler(90,0,0));
                             return;
                         }
                        

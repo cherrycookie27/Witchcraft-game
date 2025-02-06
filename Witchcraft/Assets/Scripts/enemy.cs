@@ -9,9 +9,13 @@ public class enemy : MonoBehaviour
 
     public GameObject player;
     [SerializeField] AudioSource raaah;
+    [SerializeField] AudioSource jumpScareRoar;
     bool trapped;
     public float speed;
     public bool jumpscareOMG;
+    [SerializeField] Animator anim;
+    public Transform jumpScarePos;
+    public AudioClip roar;
 
     private void Start()
     {
@@ -19,18 +23,14 @@ public class enemy : MonoBehaviour
     }
     void Update()
     {
-        transform.LookAt(player.transform.position);
+        Vector3 lookPos = new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z);
+        transform.LookAt(lookPos);
         Vector3 sneakyPos = player.transform.position;
         sneakyPos.y = transform.position.y;
 
-        if (trapped == false)
+        if (trapped == false && jumpscareOMG == false)
         {
             transform.position = Vector3.MoveTowards(this.transform.position, player.transform.position, speed * Time.deltaTime);
-        }
-        else if (trapped)
-        {
-            raaah.Play();
-            StartCoroutine(OnTrap());
         }
     }
  
@@ -38,23 +38,40 @@ public class enemy : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            jumpscareOMG = true;
+            anim.SetBool("Jumpscare", true);
+            jumpscareOMG = true;      
+            jumpScareRoar.Play();
+
+            StartCoroutine(Losing());
         }
         if (other.gameObject.CompareTag("Trap"))
         {
             trapped = true;
+            StartCoroutine(OnTrap(other.gameObject));
         }
     }
 
-    IEnumerator OnTrap()
+    private void OnTriggerExit(Collider other)
     {
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            trapped = false;
+        }
+    }
+    IEnumerator OnTrap(GameObject g)
+    {
+        raaah.Play();
         yield return new WaitForSeconds(2);
-
+        Destroy(g);
         trapped = false;
     }
 
-    void Losing()
+    IEnumerator Losing()
     {
+        yield return new WaitForSeconds(2);
+
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         SceneManager.LoadScene("Lose");
     }
 }
